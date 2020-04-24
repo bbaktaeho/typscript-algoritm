@@ -9,13 +9,15 @@ import fs from "fs";
  * * 퀵정렬
  * * 피봇(기준점)을 정해서 기준보다 작은 데이터는 왼쪽, 큰 데이터는 오른쪽으로 모음
  * * 재귀법을 사용해서 다시 동일 함수를 호출하여 왼쪽과 오른쪽을 정렬함
- * @param
+ * @param arr 정렬할 배열
+ * todo: 피봇 잡는 법을 다르게해서 성능 최적화 가능
+ * * O(nlogn), 최악은 O(n^2)
  */
 function quickSort(arr: Array<number>): Array<number> {
   if (arr.length <= 1) return arr;
   let left: Array<number> = [];
   let right: Array<number> = [];
-  let pivot = arr[0];
+  let pivot = arr[0]; // 피봇을 가장 처음 요소로 잡음
   for (let i = 0; i < arr.length; i++) {
     if (pivot > arr[i]) left.push(arr[i]);
     if (pivot < arr[i]) right.push(arr[i]);
