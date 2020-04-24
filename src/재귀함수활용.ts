@@ -41,4 +41,16 @@ function lastOne(num: number): number {
   else return lastOne(3 * num + 1);
 }
 
-console.log(lastOne(3));
+/**
+ * * 1, 2, 3 의 덧셈으로 num을 표현하는 횟수를 구하는 함수
+ * @param num 0 이상의 정수
+ * todo: 규칙을 찾아보기
+ */
+function oneTwoThree(num: number): number {
+  if (num == 1) return 1;
+  else if (num == 2) return 2;
+  else if (num == 3) return 4;
+  return oneTwoThree(num - 3) + oneTwoThree(num - 2) + oneTwoThree(num - 1);
+}
+
+console.log(oneTwoThree(6));
