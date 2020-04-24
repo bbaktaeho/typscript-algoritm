@@ -4,6 +4,7 @@
  * * O(n^2)
  */
 export {};
+import fs from "fs";
 
 function selectionSort(arr: Array<number>) {
   let minIdx: number;
@@ -15,6 +16,7 @@ function selectionSort(arr: Array<number>) {
   }
 }
 
-const arr = [5, 7, 4, 3, 6, 2, 1];
+const arr = [];
+while (arr.length <= 10000) arr.push(Math.floor(Math.random() * 100000) + 1);
 selectionSort(arr);
-console.log(arr);
+fs.writeFileSync("../output/selectionSort.txt", arr);

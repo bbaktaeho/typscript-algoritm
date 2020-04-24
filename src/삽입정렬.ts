@@ -5,7 +5,7 @@
  */
 export {};
 
-function insertionSort(arr: Array<number>) {
+async function insertionSort(arr: Array<number>): Promise<void> {
   for (let i = 1; i < arr.length; i++) {
     for (let j = 1; j <= i; j++) {
       if (arr[i - j + 1] < arr[i - j])
@@ -16,5 +16,5 @@ function insertionSort(arr: Array<number>) {
 }
 
 const arr = [5, 7, 1, 3, 2, 8, 0, 9, 10, 35, 23, 87, 54];
-insertionSort(arr);
+(async () => await insertionSort(arr))();
 console.log(arr);
