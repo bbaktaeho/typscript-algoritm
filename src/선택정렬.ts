@@ -5,11 +5,12 @@
 export {};
 
 function selectionSort(arr: Array<number>) {
-  let min: number;
+  let minIdx: number;
   for (let i = 0; i < arr.length - 1; i++) {
-    min = i;
-    for (let j = i + 1; j < arr.length; j++) arr[min] > arr[j] && (min = j);
-    [arr[min], arr[i]] = [arr[i], arr[min]];
+    minIdx = i;
+    for (let j = i + 1; j < arr.length; j++)
+      arr[minIdx] > arr[j] && (minIdx = j);
+    [arr[minIdx], arr[i]] = [arr[i], arr[minIdx]];
   }
 }
 
