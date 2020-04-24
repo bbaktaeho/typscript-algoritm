@@ -26,3 +26,19 @@ function palindrome(word: string): boolean {
     return palindrome(word.substring(1, word.length - 1));
   else return false;
 }
+
+/**
+ * * 결국 1이 되는 함수
+ * @param num 원하는 수
+ * todo: 홀수일 때 3 * n + 1
+ * todo: 짝수일 때 n / 2
+ */
+function lastOne(num: number): number {
+  console.log(num);
+
+  if (num == 1) return num;
+  else if (num % 2 == 0) return lastOne(num / 2);
+  else return lastOne(3 * num + 1);
+}
+
+console.log(lastOne(3));
