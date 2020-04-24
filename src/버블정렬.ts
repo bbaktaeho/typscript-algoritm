@@ -3,6 +3,7 @@
  * ? 스왑이 한 번도 일어나지 않을 때 작성하기
  * * O(n^2)
  */
+export {};
 
 function bubbleSort(arr: Array<number>) {
   let swapCheck = 0;
