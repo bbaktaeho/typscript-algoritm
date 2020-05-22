@@ -6,7 +6,7 @@
  * O(노드 수 + 간선 수)
  */
 
-export = {};
+export {};
 
 function DFS(graph: Record<string, any>, startNode: string) {
   let visitedList: Array<string> = [];
