@@ -33,42 +33,43 @@ export {};
  */
 
 class PriorityQueue {
-  private queue: Array<any>;
-  constructor() {
-    this.queue = [];
-  }
+    private queue: Array<any>;
+    constructor() {
+        this.queue = [];
+    }
 
-  // 큐 비었는지 확인
-  public isEmpty() {
-    if (this.queue.length == 0) return true;
-    else return false;
-  }
+    // 큐 비었는지 확인
+    public isEmpty() {
+        if (this.queue.length == 0) return true;
+        else return false;
+    }
 
-  // 큐 출력
-  public getQueue() {
-    return this.queue;
-  }
-  // 큐 삽입
-  public enqueue(data: any) {
-    this.queue.push(data);
-  }
-  // 큐 삭제
-  public dequeue() {
-    let entry = 0;
-    this.queue.forEach((e, i) => {
-      if (this.queue[entry].distance > this.queue[i].distance) entry = i;
-    });
-    return this.queue.splice(entry, 1);
-  }
+    // 큐 출력
+    public getQueue() {
+        return this.queue;
+    }
+    // 큐 삽입
+    public enqueue(data: any) {
+        this.queue.push(data);
+    }
+    // 큐 삭제
+    public dequeue() {
+        let entry = 0;
+        this.queue.forEach((e, i) => {
+            if (this.queue[entry].distance > this.queue[i].distance) entry = i;
+        });
+
+        return this.queue.splice(entry, 1)[0];
+    }
 }
 
 const graph = {
-  A: { B: 8, C: 1, D: 2 },
-  B: {},
-  C: { B: 5, D: 2 },
-  D: { E: 3, F: 5 },
-  E: { F: 1 },
-  F: { A: 5 },
+    A: { B: 8, C: 1, D: 2 },
+    B: {},
+    C: { B: 5, D: 2 },
+    D: { E: 3, F: 5 },
+    E: { F: 1 },
+    F: { A: 5 },
 };
 
 // Object.keys(객체).lenth -> 객체 요소의 개수 구하기
@@ -76,25 +77,29 @@ const graph = {
 // Object.entries(객체) -> 객체를 배열화 , 모두
 
 function dijkstra(graph: any, startNode: any) {
-  const graphList = Object.keys(graph); // graph 를 배열로
-  const distances: Array<{ node: string; distance: number }> = []; // 거리 배열 초기화(첫 정점을 기준으로 배열 생성)
-  for (let i in graphList) distances[i] = { node: graphList[i], distance: Infinity }; // 배열의 모든 노드의 거리를 무한대로 초기화
-  distances[distances.findIndex((e) => e.node == (startNode as string))].distance = 0; // 첫 정점 거리는 0 이므로 0으로 초기화
+    const graphList = Object.keys(graph); // graph 를 배열로
+    const distances: Array<{ node: string; distance: number }> = []; // 거리 배열 초기화(첫 정점을 기준으로 배열 생성)
+    for (let i in graphList) distances[i] = { node: graphList[i], distance: Infinity }; // 배열의 모든 노드의 거리를 무한대로 초기화
+    distances[distances.findIndex((e) => e.node == startNode)].distance = 0; // 첫 정점 거리는 0 이므로 0으로 초기화
+    const priorityQueue = new PriorityQueue();
+    priorityQueue.enqueue(distances.find((e) => e.node == startNode));
 
-  const priorityQueue = new PriorityQueue();
-  priorityQueue.enqueue(distances.find((e) => e.node == startNode));
+    while (!priorityQueue.isEmpty()) {
+        let current = priorityQueue.dequeue(); // 우선순위큐에서 나온 가장 짧은 거리의 노드의 연결된 노드를 접근해야함
 
-  while (!priorityQueue.isEmpty()) {
-    let { node, distance } = priorityQueue.dequeue()[0]; // 우선순위큐에서 나온 가장 짧은 거리의 노드의 연결된 노드를 접근해야함
-    if (distances[distances.findIndex((el) => el.node == node)] < distance) continue;
-    Object.entries(graph[node]).forEach((e, i) => {
-      let sumDistance = distance + e[1];
-      if (sumDistance < distances[distances.findIndex((el) => el.node == e[0])].distance) {
-        distances[distances.findIndex((el) => el.node == e[0])].distance = sumDistance;
-        priorityQueue.enqueue(distances[distances.findIndex((el) => el.node == e[0])]);
-      }
-    });
-  }
+        if (distances[distances.findIndex((el) => el.node == current.node)].distance < current.distance) continue; // 거리 배열에 있는 거리가 더 짧다면 아래 작업을 안해도됨
+
+        Object.entries(graph[current.node]).forEach((e, i) => {
+            let sumDistance = current.distance + e[1];
+            let elNode = distances[distances.findIndex((el) => el.node == e[0])];
+            if (sumDistance < elNode.distance) {
+                elNode.distance = sumDistance;
+                priorityQueue.enqueue(elNode); // 거리가 업데이트된다면 우선순위큐에 enqueue
+            }
+        });
+    }
+    return distances;
 }
 
-dijkstra(graph, "A");
+const distances = dijkstra(graph, 'A');
+console.log(distances);
