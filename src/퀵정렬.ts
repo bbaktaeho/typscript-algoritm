@@ -1,5 +1,5 @@
 export {};
-import fs from "fs";
+import fs from 'fs';
 /**
  * * 분할 정복 (병합정렬, 퀵정렬)
  * * 하양식 접근법으로 상위의 해답을 구하기 위해 아래로 내려가면서 하위의 해답을 구하는 방식
@@ -14,22 +14,21 @@ import fs from "fs";
  * * O(nlogn), 최악은 O(n^2)
  */
 function quickSort(arr: Array<number>): Array<number> {
-  if (arr.length <= 1) return arr;
-  let left: Array<number> = [];
-  let right: Array<number> = [];
-  let pivot = arr[0]; // 피봇을 가장 처음 요소로 잡음
-  for (let i = 0; i < arr.length; i++) {
-    if (pivot > arr[i]) left.push(arr[i]);
-    if (pivot < arr[i]) right.push(arr[i]);
-  }
-  let leftS = quickSort(left);
-  let rightS = quickSort(right);
-  return [...leftS, pivot, ...rightS];
+    if (arr.length <= 1) return arr;
+    let left: Array<number> = [];
+    let right: Array<number> = [];
+    let pivot = arr[0]; // 피봇을 가장 처음 요소로 잡음
+    for (let i = 0; i < arr.length; i++) {
+        if (pivot > arr[i]) left.push(arr[i]);
+        if (pivot < arr[i]) right.push(arr[i]);
+    }
+    let leftS = quickSort(left);
+    let rightS = quickSort(right);
+    return [...leftS, pivot, ...rightS];
 }
 
 const randomArr = [];
-while (randomArr.length < 10000)
-  randomArr.push(Math.floor(Math.random() * 100000) + 1);
-fs.writeFileSync("../output/quickSort.txt", quickSort(randomArr), {
-  encoding: "utf8",
+while (randomArr.length < 10000) randomArr.push(Math.floor(Math.random() * 100000) + 1);
+fs.writeFileSync('../output/quickSort.txt', quickSort(randomArr), {
+    encoding: 'utf8',
 });
